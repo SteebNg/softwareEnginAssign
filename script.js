@@ -1,4 +1,18 @@
 const imageUpload = document.getElementById('imageUpload')
+const camera = document.getElementById('video');
+const captureButton = document.getElementById('takeImage');
+
+navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}})
+    .then(function(stream){
+      camera.srcObject = stream;
+    })
+    .catch(function(error){
+      console.log("Error accessing the camera: " + error);
+    })
+
+captureButton.addEventListener('click', function(){
+  //make the imageUpload become the frame of the camera when captured
+})
 
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
