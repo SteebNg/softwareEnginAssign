@@ -34,7 +34,7 @@ async function addMarker(image, coordinates, titleMarker, status) {
         pin = new PinElement({
             glyph: glyphImg,
             scale: 3.4,
-            background: "#ff0000"
+            background: "#3BB143"
         })
     } else if (status === 'potentialIssue') {
         pin = new PinElement({
@@ -46,7 +46,7 @@ async function addMarker(image, coordinates, titleMarker, status) {
         pin = new PinElement({
             glyph: glyphImg,
             scale: 3.4,
-            background: "#a52a2a"
+            background: "#FF0000"
         })
     }
 
