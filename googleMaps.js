@@ -1,3 +1,7 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getFirestore, collection, getDocs, getDoc, doc, setDoc, initializeFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
 const KEY_USERS_LIST = "users";
 
 let map;
@@ -79,3 +83,40 @@ function scaleImage(glyphImg) {
 }
 
 initMap();
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyA52UsRsXxE-Jk2ZOnnqBQYSAzWHAG6UbM",
+    authDomain: "softwareengineer-57691.firebaseapp.com",
+    projectId: "softwareengineer-57691",
+    storageBucket: "softwareengineer-57691.appspot.com",
+    messagingSenderId: "724862222311",
+    appId: "1:724862222311:web:8584fc27bcf11c8b084742",
+    measurementId: "G-544WZNMBPJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+//get data from firebase storage and firestore
+//firestore long and lat and for the status
+//storage is for image of the persons that uses that location
+const querySnapshot = await getDocs(collection(db, "users"));
+await querySnapshot.forEach((doc) => {
+    if (doc.exists) {
+        let username = doc.data() ['name'];
+        let coordinates = {lat: doc.data() ['lat'], lng: doc.data() ['long']};
+        let titleMarker = doc.data() ['title'];
+        let status = doc.data() ['status'];
+        let img
+
+        getDownloadURL(ref(storage, 'users/' + doc.id + '/' + 'image.jpg'))
+            .then((url) => {
+                img = document.createElement("img");
+                img.setAttribute("src", url);
+            });
+
+        addMarker(img, coordinates, titleMarker, status);
+    }
+})
