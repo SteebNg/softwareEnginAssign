@@ -23,7 +23,6 @@ async function addMarker(image, coordinates, titleMarker, status) {
 
     let glyphImg = document.createElement("img");
 
-    //"https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
     glyphImg.src = image;
 
     glyphImg = scaleImage(glyphImg);
