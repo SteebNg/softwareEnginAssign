@@ -50,3 +50,76 @@ function showPosition(position) {
     locationDisplay.textContent = 'Latitude: ${latitude}, Longitude: ${longitude}';
     document.body.appendChild(locationDisplay);
 }
+
+// Load the face recognition models from the specified URI
+Promise.all([
+    faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+]).then(start) // Once models are loaded, call the start function
+
+// Asynchronous start function to initialize face recognition
+async function start() {
+    const container = document.createElement('div')
+    container.style.position = 'relative'
+    document.body.append(container)
+
+    // Load labeled images and create face matcher
+    const labeledFaceDescriptors = await loadLabeledImages()
+    const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6) // 0.6 is the threshold for matching
+
+    let image
+    let canvas
+    document.body.append('Loaded')
+
+    // Event listener for file input change
+    imageUpload.addEventListener('change', async () => {
+        if (image) image.remove() // Remove previous image if it exists
+        if (canvas) canvas.remove() // Remove previous canvas if it exists
+
+        // Convert uploaded file to image and display it
+        image = await faceapi.bufferToImage(imageUpload.files[0])
+        container.append(image)
+
+        // Create a canvas to draw face detection boxes
+        canvas = faceapi.createCanvasFromMedia(image)
+        container.append(canvas)
+        const displaySize = { width: image.width, height: image.height }
+        faceapi.matchDimensions(canvas, displaySize)
+
+        // Detect all faces in the image with landmarks and descriptors
+        const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
+        const resizedDetections = faceapi.resizeResults(detections, displaySize)
+
+        // Find the best match for each detected face
+        const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+
+        // Draw boxes around detected faces with labels
+        results.forEach((result, i) => {
+            const box = resizedDetections[i].detection.box
+            const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
+            drawBox.draw(canvas)
+        })
+    })
+}
+
+// Function to load labeled images for face recognition
+function loadLabeledImages() {
+    const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+    return Promise.all(
+        labels.map(async label => {
+            const descriptions = []
+            for (let i = 1; i <= 2; i++) {
+                // Fetch image from the given URL
+                const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/SteebNg/softwareEnginAssign/master/labeled_images/${label}/${i}.jpg`)
+
+                // Detect face in the image with landmarks and descriptor
+                const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+                descriptions.push(detections.descriptor) // Add face descriptor to descriptions
+            }
+
+            // Create and return labeled face descriptors for each label
+            return new faceapi.LabeledFaceDescriptors(label, descriptions)
+        })
+    )
+}
