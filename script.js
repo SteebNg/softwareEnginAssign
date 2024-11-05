@@ -47,7 +47,7 @@ function showPosition(position) {
 
     // Display the latitude and longitude below the canvas
     const locationDisplay = document.createElement('p');
-    locationDisplay.textContent = 'Latitude: ${latitude}, Longitude: ${longitude}';
+    locationDisplay.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
     document.body.appendChild(locationDisplay);
 }
 
