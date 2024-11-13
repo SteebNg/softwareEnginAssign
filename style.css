@@ -1,4 +1,5 @@
-#map {
-    height: 680px;
-    width: 100%;
-}
+video, canvas {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    width: 100%;}
