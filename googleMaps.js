@@ -31,20 +31,20 @@ async function addMarker(image, coordinates, titleMarker, status) {
 
     if (status === 'good') {
         pin = new PinElement({
-            glyph: glyphImg,
-            scale: 3.4,
+            //glyph: glyphImg,
+            scale: 2,
             background: "#3BB143"
         })
     } else if (status === 'potentialIssue') {
         pin = new PinElement({
-            glyph: glyphImg,
-            scale: 3.4,
+            //glyph: glyphImg,
+            scale: 2,
             background: "#ffff00"
         })
     } else {
         pin = new PinElement({
-            glyph: glyphImg,
-            scale: 3.4,
+            //glyph: glyphImg,
+            scale: 2,
             background: "#FF0000"
         })
     }
@@ -97,6 +97,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+
+let img = document.createElement("img");
+let coordinates = {lat: 5.420516633771471, lng: 100.32696676089562};
+let username = "John";
+let titleMarker = "New World";
+let status = "potentialIssue";
+img.setAttribute("src", "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
+addMarker(img, coordinates, titleMarker, status);
+
+//dummy data
+img = document.createElement("img");
+coordinates = {lat: 5.412973643398549, lng: 100.32602098128179};
+username = "Gerald";
+titleMarker = "Birch McDonalds";
+status = "error";
+img.setAttribute("src", "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
+addMarker(img, coordinates, titleMarker, status);
+
+img = document.createElement("img");
+coordinates = {lat: 5.341653604459896, lng: 100.28184700607136};
+username = "Loh Ci Hui";
+titleMarker = "INTI College";
+status = "good";
+img.setAttribute("src", "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
+addMarker(img, coordinates, titleMarker, status);
+
+img = document.createElement("img");
+coordinates = {lat: 5.473668993018232, lng: 100.24614417982677};
+username = "Amin";
+titleMarker = "Batu Ferringhi";
+status = "good";
+img.setAttribute("src", "https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
+addMarker(img, coordinates, titleMarker, status);
+
 
 //get data from firebase storage and firestore
 //firestore long and lat and for the status
