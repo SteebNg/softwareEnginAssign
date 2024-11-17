@@ -4,7 +4,7 @@ video, canvas {
     max-width: 100%;
     width: 100%;}
 
-map {
+#map {
     height: 680px;
     width: 100%;
 }
