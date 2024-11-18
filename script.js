@@ -62,7 +62,14 @@ captureButton.addEventListener('click', async function() {
         context.font = '16px Arial';
         context.fillText(result.toString(), box.x, box.y - 10);
 
+        let isUserCorrect = verifyUser(result.toString());
+        console.log(result.toString());
 
+        if (isUserCorrect) {
+            document.getElementById("outputPerson").innerHTML = "User Is Correct";
+        } else {
+            document.getElementById("outputPerson").innerHTML = "User is not correct";
+        }
     });
 });
 
@@ -77,7 +84,39 @@ function getLocation() {
 function showPosition(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    console.log(latitude, longitude);
+    const latAndLong = {lat: latitude, lng: longitude};
+    let latAndLongSupposed = readFromDb();
+
+    if (acceptedCoord(latAndLong.lat, latAndLong.lng, latAndLongSupposed.lat, latAndLongSupposed.lng)) {
+        document.getElementById("outputCoord").innerHTML = `Coordinates Accepted`;
+    } else {
+        document.getElementById("outputCoord").innerHTML = `Coordinates Unaccepted`;
+    }
+}
+
+function verifyUser(nameCurrent) {
+    const index = nameCurrent.indexOf("(") - 1;
+    const nameUser = nameCurrent.substring(0, index);
+    const nameGotten = readFromDb();
+    let nameSupposed = nameGotten.name;
+
+    return nameSupposed === nameUser;
+}
+
+function acceptedCoord(latCurrent, lngCurrent, latSupposed, lngSupposed) {
+    let latDiff = latCurrent - latSupposed;
+    let lngDiff = lngCurrent - lngSupposed;
+    if (latDiff < 0) {
+        latDiff *= -1;
+    }
+    if (lngDiff < 0) {
+        lngDiff *= -1;
+    }
+    return latDiff < 0.0005 && lngDiff < 0.0005;
+}
+
+function readFromDb() {
+    return {lat: 5.3940957376736085, lng: 100.3065250210288, name: "Eminem"}
 }
 
 // async function start() {
