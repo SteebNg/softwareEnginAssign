@@ -1,4 +1,8 @@
 const imageUpload = document.getElementById('imageUpload')
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+const captureButton = document.getElementById('captureButton');
 
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
