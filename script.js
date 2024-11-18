@@ -1,4 +1,8 @@
-const imageUpload = document.getElementById('imageUpload')
+// const imageUpload = document.getElementById('imageUpload')
+const video = document.getElementById('video');
+const canvasPic = document.getElementById('canvas');
+const context = canvasPic.getContext('2d');
+const captureButton = document.getElementById('captureButton');
 
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
@@ -6,22 +10,67 @@ Promise.all([
   faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
 ]).then(start)
 
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+    .then(function(stream) {
+        video.srcObject = stream;
+        video.width = 500;
+        video.height = 500;
+    })
+    .catch(function(error) {
+        console.log("Error accessing the camera: " + error);
+    });
+
+getLocation()
+
+// Capture an image when the button is clicked
+captureButton.addEventListener('click', function() {
+    // Set canvas size to video size
+    canvasPic.width = 500;
+    canvasPic.height = 500;
+
+    // Draw the current video frame on the canvas
+    context.drawImage(video, 0, 0, canvasPic.width, canvasPic.height);
+
+    // Show the canvas (captured image)
+    canvasPic.style.display = 'block';
+
+
+    // Optionally, get the image data URL (if you want to upload it, for example)
+    const imageDataUrl = canvasPic.toDataURL('image/png');
+    console.log(imageDataUrl);  // You can use this data URL to upload the image
+
+});
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.error("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    console.log(latitude, longitude);
+}
+
 async function start() {
-  const container = document.createElement('div')
-  container.style.position = 'relative'
-  document.body.append(container)
+  // const container = document.createElement('div')
+  // container.style.position = 'relative'
+  // document.body.append(container)
   const labeledFaceDescriptors = await loadLabeledImages()
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
   let image
   let canvas
   document.body.append('Loaded')
-  imageUpload.addEventListener('change', async () => {
+  canvasPic.addEventListener('change', async () => {
     if (image) image.remove()
     if (canvas) canvas.remove()
-    image = await faceapi.bufferToImage(imageUpload.files[0])
-    container.append(image)
+    image = await faceapi.bufferToImage(canvasPic)
+    // container.append(image)
     canvas = faceapi.createCanvasFromMedia(image)
-    container.append(canvas)
+    // container.append(canvas)
     const displaySize = { width: image.width, height: image.height }
     faceapi.matchDimensions(canvas, displaySize)
     const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
@@ -31,6 +80,7 @@ async function start() {
       const box = resizedDetections[i].detection.box
       const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
       drawBox.draw(canvas)
+        console.log(result.toString())
     })
   })
 }
