@@ -1,7 +1,8 @@
 
 #map {
-    height: 680px;
-    width: 100%;
+    /*height: 680px;*/
+    /*width: 100%;*/
+    width: 90%; height: 500px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -114,6 +115,10 @@ button:hover {
     color: black;
     text-decoration: none;
 }
+
+.styled-btn { background-color: #4CAF50; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.3s ease; text-decoration: none; /* Ensures the text is not underlined */ }
+.styled-btn:hover { background-color: #45a049; transform: scale(1.05); }
+.styled-btn a { color: white; text-decoration: none; /* Ensures the text is not underlined */ }
 
 p {
     font-size: 1.2em;
