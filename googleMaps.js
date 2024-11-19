@@ -1,3 +1,4 @@
+//(TODO) NKL
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getFirestore, collection, getDocs, getDoc, doc, setDoc, initializeFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
@@ -16,6 +17,32 @@ async function initMap() {
     });
 }
 
+function scaleImage(glyphImg) {
+    const maxWidth = 40; // Set your desired maximum width
+    const maxHeight = 40; // Set your desired maximum height
+
+    // Calculate aspect ratio preserving dimensions
+    const imgRatio = glyphImg.naturalWidth / glyphImg.naturalHeight;
+
+    let newWidth = maxWidth;
+    let newHeight = maxHeight;
+
+    if (imgRatio > 1) {
+        newHeight = maxHeight;
+        newWidth = newHeight * imgRatio;
+    } else {
+        newWidth = maxWidth;
+        newHeight = newWidth / imgRatio;
+    }
+
+    glyphImg.width = newWidth;
+    glyphImg.height = newHeight;
+
+    return glyphImg;
+}
+
+
+//(TODO) NWC
 async function addMarker(image, coordinates, titleMarker, status) {
 
     const { PinElement } = await google.maps.importLibrary('marker');
@@ -57,32 +84,10 @@ async function addMarker(image, coordinates, titleMarker, status) {
     });
 }
 
-function scaleImage(glyphImg) {
-    const maxWidth = 40; // Set your desired maximum width
-    const maxHeight = 40; // Set your desired maximum height
-
-    // Calculate aspect ratio preserving dimensions
-    const imgRatio = glyphImg.naturalWidth / glyphImg.naturalHeight;
-
-    let newWidth = maxWidth;
-    let newHeight = maxHeight;
-
-    if (imgRatio > 1) {
-        newHeight = maxHeight;
-        newWidth = newHeight * imgRatio;
-    } else {
-        newWidth = maxWidth;
-        newHeight = newWidth / imgRatio;
-    }
-
-    glyphImg.width = newWidth;
-    glyphImg.height = newHeight;
-
-    return glyphImg;
-}
-
 initMap();
 
+
+//(TODO) Henry Tan
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyA52UsRsXxE-Jk2ZOnnqBQYSAzWHAG6UbM",
