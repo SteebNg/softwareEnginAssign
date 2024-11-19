@@ -91,6 +91,30 @@ button:hover {
     background-color: #45a049;
 }
 
+.secondary-btn a{
+    color: white;
+    text-decoration: none;
+}
+
+.toVerificationButton{
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.toVerificationButton:hover{
+    background-color: #45a049;
+}
+
+.toVerificationButton a{
+    color: black;
+    text-decoration: none;
+}
+
 p {
     font-size: 1.2em;
     margin: 10px 0;
