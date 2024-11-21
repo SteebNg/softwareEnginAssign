@@ -74,43 +74,27 @@ button:hover {
     transform: scale(1.05);
 }
 
-.proceed-btn {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.proceed-btn:hover {
-    background-color: #45a049;
-}
-
-.openMaps-btn {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.openMaps-btn:hover {
-    background-color: #45a049;
-}
-
-.openMaps-btn a{
-    color: white;
-    text-decoration: none;
-}
-
 .primary-btn {
     background-color: #4CAF50;
     color: white;
-    padding: 15px 30px;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .primary-btn:hover {
     background-color: #45a049;
-    transform: scale(1.05);
+}
+
+.secondary-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.secondary-btn:hover {
+    background-color: #45a049;
+}
+
+.secondary-btn a{
+    color: white;
+    text-decoration: none;
 }
 
 .toVerificationButton{
@@ -132,27 +116,9 @@ button:hover {
     text-decoration: none;
 }
 
-.styled-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    text-decoration: none; /* Ensures the text is not underlined */
-}
-
-.styled-btn:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-.styled-btn a {
-    color: white;
-    text-decoration: none; /* Ensures the text is not underlined */
-}
+.styled-btn { background-color: #4CAF50; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.3s ease; text-decoration: none; /* Ensures the text is not underlined */ }
+.styled-btn:hover { background-color: #45a049; transform: scale(1.05); }
+.styled-btn a { color: white; text-decoration: none; /* Ensures the text is not underlined */ }
 
 p {
     font-size: 1.2em;
