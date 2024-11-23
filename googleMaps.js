@@ -113,15 +113,29 @@ async function addMarker(image, coordinates, titleMarker, status, map) {
     const { PinElement } = await google.maps.importLibrary('marker');
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-    const glyphImg = scaleImage(image);
+    // const glyphImg = scaleImage(image);
+    let glyphImg = document.createElement("img");
+
+    glyphImg.src = image;
+
+    glyphImg = scaleImage(glyphImg);
 
     let pin;
     if (status === 'good') {
-        pin = new PinElement({ scale: 2, background: "#3BB143" });
+        pin = new PinElement({
+            scale: 2,
+            background: "#3BB143"
+        });
     } else if (status === 'potentialIssue') {
-        pin = new PinElement({ scale: 2, background: "#ffff00" });
+        pin = new PinElement({
+            scale: 2,
+            background: "#ffff00"
+        });
     } else {
-        pin = new PinElement({ scale: 2, background: "#FF0000" });
+        pin = new PinElement({
+            scale: 2,
+            background: "#FF0000"
+        });
     }
 
     new AdvancedMarkerElement({
@@ -131,8 +145,6 @@ async function addMarker(image, coordinates, titleMarker, status, map) {
         content: pin.element,
     });
 }
-
-initMap();
 
 
 //(TODO) Henry Tan

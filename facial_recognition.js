@@ -127,8 +127,7 @@ function verifyUser(nameCurrent) {
 }
 
 function readFromDb(name) {
-    database = { lat: 3.1502222, lng: 101.6944619, name: "Eminem" },
-        { lat: 3.1502222, lng: 110.6944619, name: "Rihanna" }
+    database = { lat: 3.1502222, lng: 101.6944619, name: "Eminem" }
     return database
 }
 
@@ -184,8 +183,8 @@ const verificationData = [
     {
         name: readFromDb(name),
         coordinates: { lat: dbData.lat, lng: dbData.lng },
-        title: "Batu Ferringhi",
-        status: "error"
+        title: "Jalan raja",
+        status: "potentialIssue"
     }
 ];
 
