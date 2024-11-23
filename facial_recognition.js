@@ -100,7 +100,10 @@ document.getElementById('captureButton').addEventListener('click', async functio
             resultContainer.appendChild(coordinatesResult);
         }
     }
+
 });
+
+
 
 function acceptedCoord(latCurrent, lngCurrent, latSupposed, lngSupposed) {
     let latDiff = latCurrent - latSupposed;
@@ -123,12 +126,15 @@ function verifyUser(nameCurrent) {
     return nameSupposed === nameUser;
 }
 
-function readFromDb() {
-    return {lat: 3.1502222, lng: 101.6944619, name: "Eminem"}
+function readFromDb(name) {
+    database = { lat: 3.1502222, lng: 101.6944619, name: "Eminem" },
+        { lat: 3.1502222, lng: 110.6944619, name: "Rihanna" }
+    return database
 }
 
+
 function loadLabeledImages() {
-    const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark', 'Eminem']
+    const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark', 'Eminem', 'Rihanna']
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
@@ -147,3 +153,42 @@ function loadLabeledImages() {
 (async function() {
     await loadModels();
 })();
+
+const dbData = readFromDb();
+
+const verificationData = [
+    {
+        name: "John",
+        coordinates: { lat: 5.420516633771471, lng: 100.32696676089562 },
+        title: "New World",
+        status: "verified"
+    },
+    {
+        name: "Gerald",
+        coordinates: { lat: 5.412973643398549, lng: 100.32602098128179 },
+        title: "Birch McDonalds",
+        status: "potentialIssue"
+    },
+    {
+        name: "Loh Ci Hui",
+        coordinates: { lat: 5.341653604459896, lng: 100.28184700607136 },
+        title: "INTI College",
+        status: "good"
+    },
+    {
+        name: "Amin",
+        coordinates: { lat: 5.473668993018232, lng: 100.24614417982677 },
+        title: "Batu Ferringhi",
+        status: "error"
+    },
+    {
+        name: readFromDb(name),
+        coordinates: { lat: dbData.lat, lng: dbData.lng },
+        title: "Batu Ferringhi",
+        status: "error"
+    }
+];
+
+// Store the verification data in localStorage
+localStorage.setItem('verificationData', JSON.stringify(verificationData));
+console.log("Verification data stored in localStorage");
