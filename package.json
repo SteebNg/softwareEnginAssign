@@ -1,19 +1,29 @@
 {
   "name": "softwareenginassign",
   "version": "1.0.0",
-  "description": "",
   "main": "UI.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SteebNg/softwareEnginAssign"
+    "url": "git+https://github.com/SteebNg/softwareEnginAssign.git"
   },
   "private": true,
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
     "firebase": "^11.0.1",
     "firebase-admin": "^12.7.0"
-  }
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SteebNg/softwareEnginAssign/issues"
+  },
+  "homepage": "https://github.com/SteebNg/softwareEnginAssign#readme",
+  "description": ""
 }
